@@ -1,0 +1,65 @@
+- name: Setup backup script
+  hosts: all
+  become: true
+  vars:
+    s3_backup_bucket: "{{ s3_backup_bucket }}"
+    s3_backup_dir: "{{ s3_backup_dir }}"
+    aws_region_backup: "{{ aws_region_backup }}"
+
+  tasks:
+    - name: Install required packages
+      apt:
+        name:
+          - zip
+        state: present
+
+    - name: Install AWS CLI if not present
+      shell: |
+        if ! command -v aws &> /dev/null; then
+          curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "/tmp/awscliv2.zip"
+          unzip /tmp/awscliv2.zip -d /tmp
+          /tmp/aws/install
+          rm -rf /tmp/aws /tmp/awscliv2.zip
+        fi
+      args:
+        executable: /bin/bash
+
+    - name: Create or replace the backup configuration file
+      ansible.builtin.template:
+        src: templates/backup-config.conf.j2
+        dest: /etc/backup-config.conf
+        owner: root
+        group: root
+        mode: "0644"
+
+    - name: Create backup script directory
+      file:
+        path: /opt/ols-backup
+        state: directory
+        mode: "0755"
+
+    - name: Deploy backup script template
+      template:
+        src: ols-backups/backup.sh
+        dest: /opt/ols-backup/backup.sh
+        mode: "0755"
+
+    - name: Deploy restore script template
+      template:
+        src: ols-backups/restore.sh
+        dest: /opt/ols-backup/restore.sh
+        mode: "0755"
+
+    - name: Ensure log directory exists
+      file:
+        path: /var/log/ols-backups
+        state: directory
+        mode: "0755"
+
+    - name: Add cron job for daily backup at 3 AM
+      cron:
+        name: "Daily backup"
+        minute: "0"
+        hour: "3"
+        job: "/opt/ols-backup/backup.sh"
+        user: root
