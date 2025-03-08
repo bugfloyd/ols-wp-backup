@@ -106,6 +106,8 @@ Add:
 
 ### Option 2: Ansible Deployment
 
+Important Note: The playbook does not configure AWS CLI credentials as it assumes the web server is running on AWS infrastructure with proper IAM roles applied to the instance. If you're using this outside of AWS, make sure to either update the playbook, or after running it, SSH into the server and configure the AWS CLI as mentioned in the manual deployment section above.
+
 1. Edit the `vars.yml` file with your S3 bucket details
 2. Update the `inventory.ini` file with your server details
 3. Run the playbook:
