@@ -2,6 +2,11 @@
 
 A robust, server-level backup solution for OpenLiteSpeed servers hosting WordPress sites. This solution uses bash scripts to automatically detect websites and databases, create comprehensive backups, and securely store them in AWS S3.
 
+## Detailed Documentation
+
+For a complete explanation of how this backup solution works, including detailed script breakdowns, visit my blog post:
+[Build a Robust S3-Powered Backup Solution for WordPress Hosted on OpenLiteSpeed Using Bash Scripts](https://bugfloyd.com/s3-backup-solution-for-wordpress-openlitespeed-using-bash)
+
 ## Overview
 
 This repository contains scripts for creating a complete backup solution for OpenLiteSpeed WordPress servers:
@@ -139,11 +144,6 @@ Where:
 - `example.com` is the website domain
 - `example_db` is the database name
 - `YYYY-MM-DD_HH-MM-SS` is the backup timestamp
-
-## Detailed Documentation
-
-For a complete explanation of how this backup solution works, including detailed script breakdowns, visit my blog post:
-[Build a Robust AWS-Powered Backup Solution for OpenLiteSpeed WordPress Servers Using Bash Scripts](https://yourblog.com/ols-wordpress-backup-solution)
 
 ## Contributions
 
