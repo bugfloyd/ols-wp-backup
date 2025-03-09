@@ -40,13 +40,13 @@
 
     - name: Deploy backup script template
       template:
-        src: ols-backups/backup.sh
+        src: scripts/backup.sh
         dest: /opt/ols-backup/backup.sh
         mode: "0755"
 
     - name: Deploy restore script template
       template:
-        src: ols-backups/restore.sh
+        src: scripts/restore.sh
         dest: /opt/ols-backup/restore.sh
         mode: "0755"
 

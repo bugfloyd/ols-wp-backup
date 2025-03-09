@@ -1,0 +1,3 @@
+s3_backup_bucket: "your-backup-bucket-name"
+s3_backup_dir: "ols-backups"
+aws_region_backup: "us-west-2"
